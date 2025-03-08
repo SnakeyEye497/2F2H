@@ -12,7 +12,6 @@ const CreateClassroom = () => {
     section: "" 
   });
 
-  // Retrieve classrooms from localStorage or initialize with default ones
   const [classrooms, setClassrooms] = useState(() => {
     const storedClassrooms = JSON.parse(localStorage.getItem("classrooms")) || [];
     const defaultClassrooms = [
@@ -22,7 +21,6 @@ const CreateClassroom = () => {
     return storedClassrooms.length > 0 ? storedClassrooms : defaultClassrooms;
   });
 
-  // Update localStorage whenever classrooms change
   useEffect(() => {
     localStorage.setItem("classrooms", JSON.stringify(classrooms));
   }, [classrooms]);
@@ -43,7 +41,7 @@ const CreateClassroom = () => {
   };
 
   return (
-    <div className="mt-10 ml-64 p-8 bg-white rounded-3xl shadow-sm border border-gray-100">
+    <div className="mt-24 ml-64 p-8 bg-white rounded-3xl shadow-md border border-gray-200">
       {!showForm ? (
         <div className="text-center max-w-md mx-auto">
           <div className="mb-6">
@@ -52,7 +50,7 @@ const CreateClassroom = () => {
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Create New Classroom</h2>
             <p className="text-gray-600">
-              Set up a virtual learning space for your students with all the tools you need
+              Set up a virtual learning space for your students with all the tools you need.
             </p>
           </div>
           
@@ -103,30 +101,6 @@ const CreateClassroom = () => {
                 />
               </div>
             </div>
-
-            <div className="space-y-4">
-              <div className="relative">
-                <Users size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Grade Level"
-                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 rounded-xl border-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all duration-200"
-                  value={classroom.grade}
-                  onChange={(e) => setClassroom({ ...classroom, grade: e.target.value })}
-                />
-              </div>
-
-              <div className="relative">
-                <Calendar size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Section"
-                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 rounded-xl border-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all duration-200"
-                  value={classroom.section}
-                  onChange={(e) => setClassroom({ ...classroom, section: e.target.value })}
-                />
-              </div>
-            </div>
           </div>
 
           <div className="flex gap-4">
@@ -155,13 +129,17 @@ const CreateClassroom = () => {
             <div 
               key={cls.id} 
               className="p-4 bg-gray-50 rounded-xl shadow-md border flex justify-between items-center cursor-pointer hover:bg-gray-100 transition-all"
-              onClick={() => navigate(`/manage-classrooms/${cls.id}`)}
             >
               <div>
                 <h4 className="text-md font-semibold">{cls.name}</h4>
                 <p className="text-gray-500 text-sm">{cls.subject}</p>
               </div>
-              <span className="text-blue-600 font-semibold">View</span>
+              <button
+                onClick={() => navigate('/manage-classrooms')}
+                className="text-blue-600 font-semibold"
+              >
+                View
+              </button>
             </div>
           ))}
         </div>
