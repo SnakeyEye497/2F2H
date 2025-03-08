@@ -15,7 +15,7 @@ const Quizzes = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg mt-4 ml-80">
+    <div className="max-w-5xl mt-24 mx-auto bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg mt-4 ml-80">
       {/* Header Section */}
       <header className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Quizzes</h2>

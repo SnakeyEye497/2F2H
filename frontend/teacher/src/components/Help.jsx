@@ -3,7 +3,7 @@ import { HelpCircle, Mail, Phone, MessageSquare, Info } from "lucide-react";
 
 const Help = () => {
   return (
-    <div className="p-10 bg-white shadow-lg rounded-lg max-w-5xl mx-auto mt-6 space-y-8 ml-90">
+    <div className="p-10 mt-22 bg-white shadow-lg rounded-lg max-w-5xl mx-auto mt-6 space-y-8 ml-90">
       {/* Header Section */}
       <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-2 mb-6">
         <HelpCircle size={32} className="text-blue-600" /> Help & Support for Teachers
