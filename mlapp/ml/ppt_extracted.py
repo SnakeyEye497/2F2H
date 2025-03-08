@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 import os
+import sys
 from pptx import Presentation
 
 def extract_text_from_ppt(ppt_path, output_file=None):
@@ -32,7 +34,7 @@ def extract_text_from_ppt(ppt_path, output_file=None):
                 
         # Extract text from tables
         for shape in slide.shapes:
-            if shape.has_table:
+            if hasattr(shape, "has_table") and shape.has_table:
                 for row in shape.table.rows:
                     row_text = [cell.text for cell in row.cells if cell.text]
                     if row_text:
@@ -53,9 +55,60 @@ def extract_text_from_ppt(ppt_path, output_file=None):
     
     return full_text
 
-# Set file paths
-ppt_path = "/content/2F2H_ppt_MightyDucks.pptx"  # Update with your actual PPTX file path
-output_path = "/content/extracted_text.txt"  # Change or set to None if you don't want to save
+def main():
+    # Check if correct number of arguments
+    if len(sys.argv) < 2:
+        print("Usage: python ppt_extractor.py <ppt_file_path> [output_file_path]")
+        sys.exit(1)
+    
+    # Get file paths from command line arguments
+    ppt_path = sys.argv[1]
+    output_path = sys.argv[2] if len(sys.argv) > 2 else None
+    
+    # Extract text
+    extract_text_from_ppt(ppt_path, output_path)
 
-# Extract text
-extract_text_from_ppt(ppt_path, output_path)
+if __name__ == "__main__":
+    main()
+
+# Example of how to integrate with Django:
+"""
+# In your Django view:
+
+from django.shortcuts import render
+from django.http import HttpResponse, FileResponse
+from django.conf import settings
+import os
+from .ppt_extractor import extract_text_from_ppt
+
+def extract_ppt_view(request):
+    if request.method == 'POST' and request.FILES.get('ppt_file'):
+        # Get the uploaded file
+        ppt_file = request.FILES['ppt_file']
+        
+        # Save the uploaded file temporarily
+        temp_path = os.path.join(settings.MEDIA_ROOT, 'temp', ppt_file.name)
+        os.makedirs(os.path.dirname(temp_path), exist_ok=True)
+        
+        with open(temp_path, 'wb+') as destination:
+            for chunk in ppt_file.chunks():
+                destination.write(chunk)
+        
+        # Define output path
+        output_filename = os.path.splitext(ppt_file.name)[0] + '.txt'
+        output_path = os.path.join(settings.MEDIA_ROOT, 'extracted', output_filename)
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        
+        # Extract text
+        extract_text_from_ppt(temp_path, output_path)
+        
+        # Clean up temporary file
+        os.remove(temp_path)
+        
+        # Return the extracted text file as a download
+        response = FileResponse(open(output_path, 'rb'))
+        response['Content-Disposition'] = f'attachment; filename="{output_filename}"'
+        return response
+    
+    return render(request, 'upload_ppt.html')
+"""
