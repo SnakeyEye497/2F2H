@@ -43,7 +43,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     <>
       {/* Mobile Toggle Button */}
       <button
-        className="md:hidden fixed top-4 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg transition-transform duration-300 hover:bg-blue-700"
+        className="md:hidden fixed top-4 left-4 z-50  text-white p-2 rounded-lg shadow-lg transition-transform duration-300 hover:bg-gray-700"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle Sidebar"
       >
@@ -68,7 +68,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             className={({ isActive }) =>
               `flex items-center p-3 rounded-lg transition-all duration-300 ${
                 isActive
-                  ? "bg-blue-600 text-white shadow-md"
+                  ? " shadow-md"
                   : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
               }`
             }
@@ -82,7 +82,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             className={({ isActive }) =>
               `flex items-center p-3 rounded-lg transition-all duration-300 ${
                 isActive
-                  ? "bg-blue-600 text-white shadow-md"
+                  ? "  shadow-md"
                   : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
               }`
             }

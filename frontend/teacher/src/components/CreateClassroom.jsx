@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { PlusCircle, X, BookOpen, School, Check, Users, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const CreateClassroom = ({ onClassroomAdd }) => {
+const CreateClassroom = () => {
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
   const [classroom, setClassroom] = useState({ 
@@ -12,7 +12,6 @@ const CreateClassroom = ({ onClassroomAdd }) => {
     section: "" 
   });
 
-  // Ensure predefined classrooms always exist along with newly created ones
   const [classrooms, setClassrooms] = useState(() => {
     const storedClassrooms = JSON.parse(localStorage.getItem("classrooms")) || [];
     const defaultClassrooms = [
@@ -22,14 +21,18 @@ const CreateClassroom = ({ onClassroomAdd }) => {
     return storedClassrooms.length > 0 ? storedClassrooms : defaultClassrooms;
   });
 
-  // Save classrooms to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("classrooms", JSON.stringify(classrooms));
   }, [classrooms]);
 
   const handleSaveClassroom = () => {
     if (classroom.name && classroom.subject) {
-      onClassroomAdd({ id: Date.now(), ...classroom });
+      const newClassroom = { id: Date.now(), ...classroom };
+      const updatedClassrooms = [...classrooms, newClassroom];
+
+      setClassrooms(updatedClassrooms);
+      localStorage.setItem("classrooms", JSON.stringify(updatedClassrooms));
+
       setClassroom({ name: "", subject: "", grade: "", section: "" });
       setShowForm(false);
     } else {
@@ -38,7 +41,7 @@ const CreateClassroom = ({ onClassroomAdd }) => {
   };
 
   return (
-    <div className="mt-10 ml-64 p-8 bg-white rounded-3xl shadow-sm border border-gray-100">
+    <div className="mt-24 ml-64 p-8 bg-white rounded-3xl shadow-md border border-gray-200">
       {!showForm ? (
         <div className="text-center max-w-md mx-auto">
           <div className="mb-6">
@@ -47,7 +50,7 @@ const CreateClassroom = ({ onClassroomAdd }) => {
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Create New Classroom</h2>
             <p className="text-gray-600">
-              Set up a virtual learning space for your students with all the tools you need
+              Set up a virtual learning space for your students with all the tools you need.
             </p>
           </div>
           
@@ -77,10 +80,7 @@ const CreateClassroom = ({ onClassroomAdd }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div className="space-y-4">
               <div className="relative">
-                <School 
-                  size={20} 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-                />
+                <School size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Classroom Name *"
@@ -91,10 +91,7 @@ const CreateClassroom = ({ onClassroomAdd }) => {
               </div>
 
               <div className="relative">
-                <BookOpen 
-                  size={20} 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-                />
+                <BookOpen size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Subject *"
@@ -102,52 +99,6 @@ const CreateClassroom = ({ onClassroomAdd }) => {
                   value={classroom.subject}
                   onChange={(e) => setClassroom({ ...classroom, subject: e.target.value })}
                 />
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="relative">
-                <Users 
-                  size={20} 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-                />
-                <input
-                  type="text"
-                  placeholder="Grade Level"
-                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 rounded-xl border-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all duration-200"
-                  value={classroom.grade}
-                  onChange={(e) => setClassroom({ ...classroom, grade: e.target.value })}
-                />
-              </div>
-
-              <div className="relative">
-                <Calendar 
-                  size={20} 
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-                />
-                <input
-                  type="text"
-                  placeholder="Section"
-                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 rounded-xl border-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all duration-200"
-                  value={classroom.section}
-                  onChange={(e) => setClassroom({ ...classroom, section: e.target.value })}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl mb-6">
-            <div className="flex gap-3 items-start">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <School size={20} className="text-blue-600" />
-              </div>
-              <div>
-                <h4 className="font-medium text-blue-900 mb-1">Quick Tips</h4>
-                <ul className="text-sm text-blue-700 space-y-1">
-                  <li>• Use a descriptive name that includes subject and grade</li>
-                  <li>• Add section information for multiple classes</li>
-                  <li>• Keep naming consistent across your classrooms</li>
-                </ul>
               </div>
             </div>
           </div>
@@ -178,13 +129,17 @@ const CreateClassroom = ({ onClassroomAdd }) => {
             <div 
               key={cls.id} 
               className="p-4 bg-gray-50 rounded-xl shadow-md border flex justify-between items-center cursor-pointer hover:bg-gray-100 transition-all"
-              onClick={() => navigate("/manage-classrooms")}
             >
               <div>
                 <h4 className="text-md font-semibold">{cls.name}</h4>
                 <p className="text-gray-500 text-sm">{cls.subject}</p>
               </div>
-              <span className="text-blue-600 font-semibold">View</span>
+              <button
+                onClick={() => navigate('/manage-classrooms')}
+                className="text-blue-600 font-semibold"
+              >
+                View
+              </button>
             </div>
           ))}
         </div>

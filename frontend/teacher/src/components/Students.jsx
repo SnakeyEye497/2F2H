@@ -50,7 +50,7 @@ const Students = () => {
   );
 
   return (
-    <div className="ml-64 min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8 mt-10">
+    <div className="ml-64 mt-22 min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8 mt-10">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8 bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">

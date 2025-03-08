@@ -10,7 +10,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-lg mt-8 transition-all duration-300 ease-in-out">
+    <div className="max-w-2xl mt-24 mx-auto bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-lg mt-8 transition-all duration-300 ease-in-out ml-[530px]">
       {/* Title */}
       <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">⚙️ Settings</h2>
 

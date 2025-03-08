@@ -17,9 +17,9 @@ const trophyIcons = [
 
 const Leaderboard = () => {
   return (
-    <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg mt-8">
+    <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg mt-[80px] ms-[450px]">
       {/* Leaderboard Heading */}
-      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center">🏆 Leaderboard</h2>
+      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center">Leaderboard</h2>
 
       {/* Responsive Table Wrapper */}
       <div className="overflow-x-auto">
