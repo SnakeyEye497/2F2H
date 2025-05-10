@@ -33,7 +33,7 @@ The system architecture leverages modern backend orchestration using Kubernetes,
 
 ## 🖼️ Architecture Diagram
 
-![Architecture Diagram](Architecture)
+![Architecture Diagram](Architecture.png)
 
 ---
 
